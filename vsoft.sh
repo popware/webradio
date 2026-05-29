@@ -1,2 +1,2 @@
 #!/bin/sh
-amixer set Master 55000
+amixer set Master 30000

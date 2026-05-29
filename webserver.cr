@@ -1,6 +1,6 @@
 require "http/server"
 
-HOST = "192.168.1.111" # local webserver
+HOST = "192.168.4.140" # local webserver
 PORT = 8080
 FILESTATIONS = "stations.txt"
 FILESTYLES = "styles.css"
@@ -132,7 +132,7 @@ def playselected(sel : Int32, last : Int32, stations : CAllStations) : Int32
   sel = 1 if sel > last
   index = sel - 1
   station = stations.get_station(index)
-  system "./radioplay.sh #{station.get_name}"
+  system "/usr/local/bin/radioplay.sh #{station.get_name}"
   puts "Play[#{sel}] #{station.get_name}" if DEBUG > 0
   File.write(FILELASTSTATION, sel.to_s) # save selected station
   return sel
@@ -206,19 +206,19 @@ def main
         homepage(context, selected, myStations)
         next
      when "/stop"
-        system "./vstop.sh"
+        system "/usr/local/bin/vstop.sh"
         homepage(context, selected, myStations)
         next
       when "/soft"
-        system "./vsoft.sh"
+        system "/usr/local/bin/vsoft.sh"
         homepage(context, selected, myStations)
         next
       when "/normal"
-        system "./vnormal.sh"
+        system "/usr/local/bin/vnormal.sh"
         homepage(context, selected, myStations)
         next
       when "/loud"
-        system "./vloud.sh"
+        system "/usr/local/bin/vloud.sh"
         homepage(context, selected, myStations)
         next
       when "/prev"
