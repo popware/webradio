@@ -1,0 +1,64 @@
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+}
+
+th, td {
+    border: 1px solid #444;
+    padding: 4px 6px;
+    text-align: left;
+}
+
+th {
+    background-color: #333;
+    padding: 6px;
+}
+
+/* Alternating row colors */
+tr:nth-child(odd) {
+    background-color: #404040;
+}
+
+tr:nth-child(even) {
+    background-color: #101010;
+}
+
+/* Hover effect */
+tr:hover {
+    background-color: #2f2f2f;
+}
+
+/* Highlight selected row */
+tr.selected {
+    background-color: #8b3b67 !important;
+    color: #ffffff;
+}
+
+a {
+    color: #4da6ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    background-color: #333;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #444;
+}
