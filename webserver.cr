@@ -22,6 +22,12 @@ class CStation
     return @likes
   end
 
+  def dec_likes
+    @likes -= 1 if @likes > 0
+    puts "Likes dec to #{@likes}" if DEBUG > 2
+    return @likes
+  end
+
   def get_likes
     puts "Likes got #{@likes} for #{@name}" if DEBUG > 2
     return @likes
@@ -147,6 +153,7 @@ def buttons(context : HTTP::Server::Context)
   context.response.print "<button onclick=\"document.location='prev'\">&lt;</button>" #[<]
   context.response.print "<button onclick=\"document.location='next'\">&gt;</button>" #[>]
   context.response.print "<button onclick=\"document.location='like'\">Like</button>"
+  context.response.print "<button onclick=\"document.location='unlike'\">Unlike</button>"
   context.response.print "</div>"
 end
 
@@ -250,6 +257,16 @@ def main
           station = myStations.get_station(index)
           station.inc_likes
           puts "LIKE: SEL=#{selected} STN=#{station.get_name} LIK=#{station.get_likes}" if DEBUG > 0
+          myStations.save_likes
+        end
+        homepage(context, selected, myStations, true)
+        next
+      when "/unlike"
+        if (selected > 0) && (selected <= laststation) # valid selection
+          index = selected - 1
+          station = myStations.get_station(index)
+          station.dec_likes
+          puts "UNLIKE: SEL=#{selected} STN=#{station.get_name} LIK=#{station.get_likes}" if DEBUG > 0
           myStations.save_likes
         end
         homepage(context, selected, myStations, true)
