@@ -150,6 +150,10 @@ def buttons(context : HTTP::Server::Context)
   context.response.print "</div>"
 end
 
+def likes_to_stars(likes : Int32) : String
+  "* " * likes
+end
+
 def homepage(context : HTTP::Server::Context, selected_index : Int32, stations : CAllStations, auto_refresh : Bool = false)
   puts "HOME[" if DEBUG > 1
   stations.show_stations
@@ -164,17 +168,18 @@ def homepage(context : HTTP::Server::Context, selected_index : Int32, stations :
   end
   context.response.print "</style></head><body>"
   buttons(context)
-  context.response.print "<table border='1'><tr><th>Select</th><th>Station</th><th>Likes</th></tr>"
+  context.response.print "<table border='1'><tr><th style='width:30px'>Select</th><th style='width:60px; text-align:center'>Likes</th><th>Station</th></tr>"
   stations.number_of_stations.times do |index|
     sel = index + 1
     station = stations.get_station(index)
-    marker = (sel == selected_index ? "**" : "")
+    marker1 = (sel == selected_index ? "[ " : "")
+    marker2 = (sel == selected_index ? " ]" : "")
     # Optional: add class for the selected row
     row_class = (sel == selected_index) ? " class='selected'" : ""
     context.response.print "<tr#{row_class}>"
-    context.response.print "<td>#{sel} #{marker}</td>"
+    context.response.print "<td style='width:30px; text-align:center'>#{marker1}#{sel}#{marker2}</td>"
+    context.response.print "<td style='width:60px; text-align:center'> #{likes_to_stars(station.get_likes)}</td>"
     context.response.print "<td><a href='/play#{sel}'>#{station.get_name}</a></td>"
-    context.response.print "<td>#{station.get_likes}</td>"
     context.response.print "</tr>"
   end
   context.response.print "</table>"
@@ -270,4 +275,3 @@ def main
 end
 
 main
-
