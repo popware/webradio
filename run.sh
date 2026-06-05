@@ -1,17 +1,14 @@
 #!/bin/sh
-echo
-echo ---webserver stopping---
-ps -AH | grep webserver
-sudo killall -e webserver
-ps -AH | grep webserver
-echo ---webserver stopped---
-sleep 2
-echo
-echo ---webserver started---
+echo ---stopping webradio---
+sudo killall -e firefox > /dev/null 2>&1
+sudo killall -e webserver > /dev/null 2>&1
+./radiokill.sh
+echo ---starting webserver---
 ./webserver &
-sleep 2
-ps -AH | grep webserver
-echo ---webserver running in background---
-echo ---browser started---
+sleep 1
+echo ---starting browser---
 firefox http://192.168.4.140:8080 > /dev/null 2>&1
-echo ---browser stopped---
+echo ---stopping webradio---
+sudo killall -e webserver > /dev/null 2>&1
+./radiokill.sh
+echo ---webradio stopped---
